@@ -1,0 +1,101 @@
+{% extends 'problems/base.html' %}
+
+{% block mainContents %}
+<div class="col-lg-12">
+  <div class="form-panel">
+    <h4><i class="fa fa-angle-right"></i> {{ problem.title }} [{{ problem.score }}pt]{% if problem in user.getSolvedProblems %} <i class="fa fa-flag"></i>{% endif %}</h4>
+    <hr>
+    <div class="form-panel-content">
+      {{ problem.description | safe}}
+    </div>
+
+    {% if problem in user.solvedProblems.all %}
+    <form class="form-inline" role="form" method="post" action="{% url 'problems:submit' problem %}">
+      {% csrf_token %}
+      <div style="text-align: center;">
+      <input type="text" class="form-control" style="width:500px;" name="flag" placeholder="You have already pwned this problem." disabled>
+      <button type="submit" class="btn btn-theme" disabled>Submit</button>
+      </div>
+    </form>
+    {% else %}
+    <form class="form-inline" role="form" method="post" action="{% url 'problems:submit' problem %}">
+      {% csrf_token %}
+      <div style="text-align: center;">
+      <input type="text" class="form-control" style="width:500px;" name="flag" placeholder="Click here to enter the Flag!!">
+      <button type="submit" class="btn btn-theme">Submit</button>
+      </div>
+    </form>
+    {% endif %}
+    <hr>
+    <form method="post" action="{% url 'problems:unlockHint' problem %}">
+      {% csrf_token %}
+      {% if problem in user.hintedProblems.all %}
+      <button type="button" class="btn btn-primary btn-xs" disabled>Gimme a Hint!!</button>
+      <div class="form-panel-content">
+	{{ problem.hint | safe}}
+      </div>
+      {% else %}
+      <button type="submit" class="btn btn-primary btn-xs">Gimme a Hint!!</button>
+      {% endif %}
+    </form>
+  </div>
+</div><!-- /col-md-12 -->
+{% endblock %}
+
+{% block rightContents %}
+{% endblock %}
+
+{% block javascript %}
+
+{% if problem in user.solvedProblems.all and showModalFlag == 1 %}
+<div class="modal fade" id="correctModal" tabindex="-1" role="dialog" aria-labelledby="collectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h4 class="modal-title" id="collectModalLabel">Correct!!</h4>
+      </div>
+      <div class="modal-body">
+	Congratulations! You earned {{ problem.score }} points!!
+      </div>
+      <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>      				
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.modal').modal('show');
+    });
+</script>
+{% endif %}
+
+{% if showModalFlag == 2 %}
+<div class="modal fade" id="correctModal" tabindex="-1" role="dialog" aria-labelledby="collectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h4 class="modal-title" id="collectModalLabel">Failed!!</h4>
+      </div>
+      <div class="modal-body">
+	Please try again..
+      </div>
+      <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>      				
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.modal').modal('show');
+    });
+</script>
+{% endif %}
+
+
+{% endblock %}
+
+

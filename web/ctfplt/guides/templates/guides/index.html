@@ -1,0 +1,23 @@
+{% extends 'guides/base.html' %}
+
+{% block mainContents %}
+<div class="col-lg-12">
+  <div class="form-panel">
+    {% for genre in genres %}
+    <h4><i class="fa fa-angle-right"></i> {{ genre.name }}</h4>
+    <div class="list-group">
+      {% for article in articles %}
+      {% if article.genre == genre %}
+      <a href="{% url 'guides:detail' articleTitle=article.title %}" class="list-group-item list-group-item-action">{{ article.index }}: {{ article.title }}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div><!-- /content-panel -->
+</div><!-- /col-md-12 -->
+{% endblock %}
+
+{% block rightContents %}
+{% endblock %}
+
+

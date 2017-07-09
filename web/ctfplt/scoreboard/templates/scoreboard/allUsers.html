@@ -1,0 +1,53 @@
+{% extends 'scoreboard/base.html' %}
+
+{% block mainContents %}
+<div class="col-lg-9">
+  <div class="form-panel">
+    <h4 class="mb"><i class="fa fa-angle-right"></i> All Users</h4>
+    <hr>
+    <table class="table table-striped table-advance table-hover">
+      <thead>
+	<tr>
+	  <th width="5%"><i class="fa fa-line-chart "></i></th>
+	  <th width="10%"><i class="fa fa-trophy"></i> Score</th>
+	  <th width="20%"><i class="fa fa-user"></i> User</th>
+	  <th width="20%"><i class="fa fa-users"></i> Affiliate</th>
+	  <th width="10%"><i class="fa fa-lightbulb-o"></i> No Hint</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for user in allUsers %}
+	<tr>
+	  <td>{{ forloop.counter }}</td>
+	  <td>{{ user.score }}</td>
+	  <td>{{ user.username }}</td>
+	  <td>{{ user.affiliate }}</td>
+	  <td>{{ user.noHintSolvedProblems | length }}</td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div><!-- col-lg-12-->      	
+{% endblock %}
+
+{% block rightContents %}
+<div class="col-lg-3 ds">
+  <h3>Recent Submission</h3>
+  {% for record in history %}
+  <div class="desc">
+    <div class="thumb">
+      <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+    </div>
+    <div class="details">
+      <p><muted>{{ record.submitDatetime }}</muted><br/>
+	{{ record.user.username }} won "{{ record.problem.title}}" {% if record.withHint %}.{% else %}without the hint !!{% endif %}	
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

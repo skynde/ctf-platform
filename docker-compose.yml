@@ -1,0 +1,21 @@
+version: "3"
+services:
+  web:
+    build: ./web
+    env_file:
+      - ./web/web.env
+    depends_on:
+      - db
+    volumes:
+      - ./web:/web
+    ports:
+      - 8000:8000
+    #command: /tmp/wait-for-it/wait-for-it.sh -t 0 db:5432 -- python manage.py runserver 0.0.0.0:8000
+    working_dir: "/web/ctfplt"
+    command: tail -f /dev/null
+  db:
+    build: ./db
+    env_file:
+      - ./db/db.env
+    volumes:
+      - ./db/data:/var/lib/postgresql/data

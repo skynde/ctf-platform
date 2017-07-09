@@ -1,0 +1,18 @@
+{% extends 'guides/base.html' %}
+
+{% block mainContents %}
+<div class="col-lg-12">
+  <div class="form-panel">
+    <h4><i class="fa fa-angle-right"></i> {{ article.title }}</h4>
+    <hr>
+
+    {{ article.text | safe }}
+
+  </div><!-- /content-panel -->
+</div><!-- /col-md-12 -->
+{% endblock %}
+
+{% block rightContents %}
+{% endblock %}
+
+

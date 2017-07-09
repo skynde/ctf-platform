@@ -1,0 +1,13 @@
+{% extends 'guides/base.html' %}
+
+{% block mainContents %}
+<div class="col-lg-9">
+  <div class="form-panel">
+    {% for article in articles %}
+    {{ article.formatted_markdown | safe }}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+

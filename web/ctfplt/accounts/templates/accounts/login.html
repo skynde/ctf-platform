@@ -1,0 +1,27 @@
+{% extends 'accounts/base.html' %}
+
+{% block mainContents %}
+<!-- center -->
+<div class="col-lg-12 main-chart">
+  <div class="row">
+    <div class="col-md-12 mb">
+      <form method="post" class="form-login" action="{% url 'accounts:login' %}">
+	{% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+	<h2 class="form-login-heading">sign in now</h2>
+	<div class="login-wrap">
+	  <input type="text" name="{{ form.username.name }}" class="form-control" placeholder="User ID" autofocus>
+	  <br>
+	  <input type="password" name="{{ form.password.name }}"  class="form-control" placeholder="Password">
+	  &nbsp;
+	  <button class="btn btn-theme btn-block" value="login" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+	  {% if form.errors %}
+	  <hr>
+	  <p>Your username and password didn't match. Please try again.</p>
+	  {% endif %}
+	</div>
+      </form>	  	
+    </div>
+  </div>
+</div>
+{% endblock %}
