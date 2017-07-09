@@ -4,6 +4,10 @@ I created this project as a study.
 This project uses [DashGum](http://blacktie.co/2014/07/dashgum-free-dashboard/).
 Thanks to Carlos.
 
+## Requirements
+- Docker
+- Docker compose
+
 ## Usage 
 1. Build a container
 ```docker-compose up```
